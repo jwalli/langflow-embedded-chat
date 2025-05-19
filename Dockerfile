@@ -2,23 +2,22 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Kopiere package.json zuerst für besseres Layer-Caching
+# Kopiere package.json und package-lock.json
 COPY package*.json ./
 
-# Konfiguriere npm und installiere Abhängigkeiten
-RUN npm config set legacy-peer-deps true
+# Installiere Abhängigkeiten mit --legacy-peer-deps
 RUN npm install --legacy-peer-deps
 
-# Kopiere den restlichen Code
+# Kopiere den Rest des Projekts
 COPY . .
 
-# Baue die Anwendung
+# Baue das Projekt
 RUN npm run build
 
-# Installiere serve für statisches Hosting
+# Installiere serve für Produktion
 RUN npm install -g serve
 
-# Expose Port 3000
+# Exponiere den Port
 EXPOSE 3000
 
 # Starte den Server
