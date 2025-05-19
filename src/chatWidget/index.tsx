@@ -37,9 +37,8 @@ export default function ChatWidget({
   start_open=false,
 }: {
   api_key?: string;
-  input_value: string,
-  output_type: string,
-  input_type: string,
+  output_type: string;
+  input_type: string;
   output_component?: string;
   send_icon_style?: React.CSSProperties;
   chat_position: ChatPosition;
