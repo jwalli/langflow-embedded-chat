@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "serve": "^14.2.4",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack-cli": "^5.1.4"
   },
   "engines": {
