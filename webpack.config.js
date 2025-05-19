@@ -1,6 +1,6 @@
 const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
 const glob = require("glob");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: {
