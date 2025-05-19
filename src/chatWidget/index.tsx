@@ -4,6 +4,8 @@ import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
 const { v4: uuidv4 } = require('uuid');
 
+type ChatPosition = "bottom-right" | "bottom-left" | "top-right" | "top-left" | "right-middle";
+
 export default function ChatWidget({
   api_key,
   output_type = "chat",
@@ -25,7 +27,7 @@ export default function ChatWidget({
   online_message,
   offline_message,
   window_title,
-  chat_position,
+  chat_position = "right-middle",
   placeholder,
   input_style,
   placeholder_sending,
@@ -40,7 +42,7 @@ export default function ChatWidget({
   input_type: string,
   output_component?: string;
   send_icon_style?: React.CSSProperties;
-  chat_position?: string;
+  chat_position: ChatPosition;
   chat_trigger_style?: React.CSSProperties;
   bot_message_style?: React.CSSProperties;
   user_message_style?: React.CSSProperties;
@@ -2138,48 +2140,50 @@ input::-ms-input-placeholder { /* Microsoft Edge */
 .markdown-body>*:first-child>.heading-element:first-child {
   margin-top: 0 !important;
 }`
+
   return (
     <div style={{ position: "relative" }}>
       <style dangerouslySetInnerHTML={{ __html: styles + markdownBody }}></style>
-      <ChatTrigger
-        triggerRef={triggerRef}
-        open={open}
-        setOpen={setOpen}
-        style={chat_trigger_style}
-      />
-      <ChatWindow
-        api_key={api_key}
-        input_type={input_type}
-        output_type={output_type}
-        output_component={output_component}
-        open={open}
-        height={height}
-        width={width}
-        send_icon_style={send_icon_style}
-        bot_message_style={bot_message_style}
-        user_message_style={user_message_style}
-        chat_window_style={chat_window_style}
-        error_message_style={error_message_style}
-        send_button_style={send_button_style}
-        placeholder={placeholder}
-        input_style={input_style}
-        online={online}
-        online_message={online_message}
-        offline_message={offline_message}
-        placeholder_sending={placeholder_sending}
-        window_title={window_title}
-        input_container_style={input_container_style}
-        tweaks={tweaks}
-        flowId={flow_id}
-        hostUrl={host_url}
-        updateLastMessage={updateLastMessage}
-        addMessage={addMessage}
-        messages={messages}
-        triggerRef={triggerRef}
-        position={chat_position}
-        sessionId={sessionId}
-        additional_headers={additional_headers}
-      />
+      <>
+        <ChatTrigger
+          onClick={() => setOpen(!open)}
+          ref={triggerRef}
+          style={chat_trigger_style}
+        />
+        <ChatWindow
+          api_key={api_key}
+          input_type={input_type}
+          output_type={output_type}
+          output_component={output_component}
+          open={open}
+          height={height}
+          width={width}
+          send_icon_style={send_icon_style}
+          bot_message_style={bot_message_style}
+          user_message_style={user_message_style}
+          chat_window_style={chat_window_style}
+          error_message_style={error_message_style}
+          send_button_style={send_button_style}
+          placeholder={placeholder}
+          input_style={input_style}
+          online={online}
+          online_message={online_message}
+          offline_message={offline_message}
+          placeholder_sending={placeholder_sending}
+          window_title={window_title}
+          input_container_style={input_container_style}
+          tweaks={tweaks}
+          flowId={flow_id}
+          hostUrl={host_url}
+          updateLastMessage={updateLastMessage}
+          addMessage={addMessage}
+          messages={messages}
+          triggerRef={triggerRef}
+          position="bottom-left"
+          sessionId={sessionId}
+          additional_headers={additional_headers}
+        />
+      </>
     </div>
   );
 }
