@@ -4,7 +4,7 @@ import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
 const { v4: uuidv4 } = require('uuid');
 
-type ChatPosition = "bottom-right" | "bottom-left" | "top-right" | "top-left" | "right-middle";
+type ChatPosition = "bottom-right" | "bottom-left" | "top-right" | "top-left" | "right-middle" | "right-bottom";
 
 export default function ChatWidget({
   api_key,
