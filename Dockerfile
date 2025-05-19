@@ -1,24 +1,26 @@
-FROM node:18-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
-# Kopiere package.json und package-lock.json
+# Kopieren der package.json und Installation der Abhängigkeiten mit legacy-peer-deps
 COPY package*.json ./
-
-# Installiere Abhängigkeiten mit --legacy-peer-deps
+RUN npm config set legacy-peer-deps true
 RUN npm install --legacy-peer-deps
 
-# Kopiere den Rest des Projekts
+# Erst danach den restlichen Code kopieren
 COPY . .
 
-# Baue das Projekt
+# Exportieren der Umgebungsvariable für den Build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
+# Build ausführen
 RUN npm run build
 
-# Installiere serve für Produktion
+# Installieren von serve für statisches Hosting
 RUN npm install -g serve
 
-# Exponiere den Port
+# Port exponieren
 EXPOSE 3000
 
-# Starte den Server
+# Server starten
 CMD ["serve", "-s", "build"]
