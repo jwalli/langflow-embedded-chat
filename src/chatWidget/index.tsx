@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
@@ -2140,15 +2140,43 @@ input::-ms-input-placeholder { /* Microsoft Edge */
   margin-top: 0 !important;
 }`
 
+  // Berechne die Position basierend auf chat_position
+  const positionStyle: React.CSSProperties = useMemo(() => {
+    switch (chat_position) {
+      case "right-middle":
+        return {
+          position: "fixed",
+          bottom: "50%",
+          right: "20px",
+          transform: "translateY(50%)"
+        };
+      case "right-bottom":
+        return {
+          position: "fixed",
+          bottom: "20px",
+          right: "20px"
+        };
+      // Andere Positionen...
+      default:
+        return {
+          position: "fixed",
+          bottom: "20px",
+          right: "20px"
+        };
+    }
+  }, [chat_position]);
+
+  // Wende die Position auf den Container an
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ ...positionStyle, zIndex: 9999 }}>
       <style dangerouslySetInnerHTML={{ __html: styles + markdownBody }}></style>
       <>
         <ChatTrigger
-          open={open} // Stelle sicher, dass diese Props übergeben werden
-          setOpen={setOpen} // Diese Prop erlaubt der Komponente, den open-Zustand zu ändern
-          triggerRef={triggerRef}
           style={chat_trigger_style}
+          open={open}
+          setOpen={setOpen}
+          onClick={() => setOpen(!open)}
+          triggerRef={triggerRef}
         />
         <ChatWindow
           api_key={api_key}
@@ -2179,7 +2207,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
           addMessage={addMessage}
           messages={messages}
           triggerRef={triggerRef}
-          position="bottom-left"
+          position={chat_position} // Gib die Position weiter
           sessionId={sessionId}
           additional_headers={additional_headers}
         />

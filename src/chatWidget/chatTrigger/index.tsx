@@ -5,9 +5,8 @@ interface ChatTriggerProps {
   style?: React.CSSProperties;
   open: boolean;
   setOpen: Function;
-  triggerRef: React.RefObject<HTMLButtonElement> | null;
+  triggerRef?: React.RefObject<HTMLButtonElement> | null;
   onClick?: () => void;
-  // Die ref-Prop muss hier nicht hinzugefügt werden, da wir triggerRef verwenden
 }
 
 export default function ChatTrigger({
@@ -17,14 +16,13 @@ export default function ChatTrigger({
   triggerRef,
   onClick,
 }: ChatTriggerProps) {
-  // Im Funktionskörper verwende onClick, falls vorhanden:
+  // Verwende onClick oder setze den Standardwert
   const handleClick = onClick || (() => setOpen(!open));
   
-  // Verwende handleClick im Button:
   return (
     <button 
       onClick={handleClick}
-      ref={triggerRef as any}  // Den Cast zu any behalten
+      ref={triggerRef as any}
       style={style}
       onMouseDown={(e) => {
         e.preventDefault()
