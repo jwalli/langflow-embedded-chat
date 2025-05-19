@@ -1,13 +1,13 @@
-import { MessageSquare, X } from "lucide-react"
+import { MessageSquare, X } from "lucide-react";
+import React from "react";
 
-// Suche nach der Interface-Definition
 interface ChatTriggerProps {
   style?: React.CSSProperties;
   open: boolean;
   setOpen: Function;
   triggerRef: React.RefObject<HTMLButtonElement> | null;
-  // Füge onClick hinzu:
   onClick?: () => void;
+  // Die ref-Prop muss hier nicht hinzugefügt werden, da wir triggerRef verwenden
 }
 
 export default function ChatTrigger({
@@ -24,7 +24,7 @@ export default function ChatTrigger({
   return (
     <button 
       onClick={handleClick}
-      ref={triggerRef}
+      ref={triggerRef as any}  // Den Cast zu any behalten
       style={style}
       onMouseDown={(e) => {
         e.preventDefault()

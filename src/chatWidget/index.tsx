@@ -2145,8 +2145,9 @@ input::-ms-input-placeholder { /* Microsoft Edge */
       <style dangerouslySetInnerHTML={{ __html: styles + markdownBody }}></style>
       <>
         <ChatTrigger
-          onClick={() => setOpen(!open)}
-          ref={triggerRef}
+          open={open} // Stelle sicher, dass diese Props übergeben werden
+          setOpen={setOpen} // Diese Prop erlaubt der Komponente, den open-Zustand zu ändern
+          triggerRef={triggerRef}
           style={chat_trigger_style}
         />
         <ChatWindow
